@@ -1,39 +1,95 @@
-/* The styles for the elements */
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 85%;
-    margin-left: 2em;
-    margin-right: 2em;
-    width: 400px;
-}
-h1 {
-    font-size: 140%;
-    color: teal;
-    margin-bottom: .5em;
-}
-label {
-    float: left;
-    width: 7em;
-    margin-bottom: 0.5em;
-    font-weight: bold;
-}
-input[type="text"], input[type="email"], input[type="password"] {  /* An attribute selector */
-    width: 15em;
-    margin-left: 0.5em;
-    margin-bottom: 0.5em;
-}
-span {
-    margin-left: 0.5em;
-    margin-bottom: 0.5em;
-}
-br {
-    clear: both;
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
 }
 
-/* The styles for the classes */
-.pad_top {
-    padding-top: 0.25em;
+li {
+    float: left;
 }
-.margin_left {
-    margin-left: 0.5em;
+
+li a {
+    display: block;
+    color: #666666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+li a.active {
+    color: white;
+    background-color: #4CAF50;
+}
+
+table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+input[type=text] select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.form {
+    margin: auto;
+    width: 50%;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+input[type=button] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
 }

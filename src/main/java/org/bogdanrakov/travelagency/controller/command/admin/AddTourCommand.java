@@ -21,8 +21,7 @@ public class AddTourCommand implements Command {
         String destination = request.getParameter("destination");
         String description = request.getParameter("description");
         int duration = Integer.parseInt(request.getParameter("duration"));
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-        LocalDate start = LocalDate.parse(request.getParameter("start"), dtf);
+        LocalDate start = LocalDate.parse(request.getParameter("start"));
         TourType type = TourType.valueOf(request.getParameter("type"));
         boolean hot = Boolean.parseBoolean(request.getParameter("hot"));
         int price = Integer.parseInt(request.getParameter("price"));

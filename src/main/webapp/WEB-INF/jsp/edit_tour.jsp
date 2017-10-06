@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Edit Tour</title>
-    <link href="../../styles/form.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
 <div class="form">

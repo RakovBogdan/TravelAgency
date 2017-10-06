@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Account</title>
-    <link rel="stylesheet" href="../../styles/table.css" type="text/css"/>
+    <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
 <h1>Your Account:</h1>

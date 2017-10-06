@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin account</title>
-    <link rel="stylesheet" href="../../styles/table.css" type="text/css"/>
-
+    <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
 <h1>Admin:</h1>

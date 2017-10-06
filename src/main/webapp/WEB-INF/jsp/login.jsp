@@ -9,6 +9,7 @@
 <body>
 <h1>Login to Travel Agency</h1>
 <p>To make orders, enter your email address and password below.</p>
+<div class="form">
 <form method="post" action="travelAgency/account">
     <input type="hidden" name="command" value="login">
     <label class="pad_top">Email:</label>
@@ -18,7 +19,7 @@
     <label>&nbsp;</label>
     <input type="submit" value="Login" class="margin_left">
 </form>
-
+</div>
 <p> Don't have account? <a href="/travelAgency/Register&command=register">Register</a></p>
 </body>
 </html>

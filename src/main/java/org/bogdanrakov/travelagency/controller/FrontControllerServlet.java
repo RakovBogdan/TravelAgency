@@ -5,6 +5,7 @@ import org.bogdanrakov.travelagency.controller.command.LoginCommand;
 import org.bogdanrakov.travelagency.controller.command.ShowMainCommand;
 import org.bogdanrakov.travelagency.controller.command.admin.ShowTourDetails;
 import org.bogdanrakov.travelagency.controller.command.admin.UpdateTourCommand;
+import org.bogdanrakov.travelagency.controller.command.user.OrderApprovalCommand;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -27,6 +28,7 @@ public class FrontControllerServlet extends HttpServlet {
         allCommands.put("tourDetails", new ShowTourDetails());
         allCommands.put("confirmEdit", new UpdateTourCommand());
         allCommands.put("showMain", new ShowMainCommand());
+        allCommands.put("orderApproval", new OrderApprovalCommand());
     }
 
     @Override

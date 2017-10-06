@@ -6,11 +6,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Main Travel Agency</title>
-    <link rel="stylesheet" href="../../styles/table.css" type="text/css">
-    <link rel="stylesheet" href="../../styles/navbar.css" type="text/css">
+    <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
-<ul>
+<ul class="navbar">
     <li><a class="active" href="/travelAgency/">Home</a></li>
     <li><a href="#news">News</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -27,7 +26,7 @@
         <tr>
             <td><c:out value="${tour.title}"/></td>
             <td><c:out value="${tour.price}"/></td>
-            <td><a href="travelAgency/editTour?command=tourDetails&tourId=${tour.id}">Edit</a></td>
+            <td><a href="travelAgency/editTour?command=orderApproval&tourId=${tour.id}">Order</a></td>
         </tr>
     </c:forEach>
 </table>

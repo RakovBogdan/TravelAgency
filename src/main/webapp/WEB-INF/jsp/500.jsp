@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>500</title>
+    <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
 <h1>Server Error</h1>
