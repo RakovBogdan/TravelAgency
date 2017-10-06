@@ -10,9 +10,8 @@ import java.util.Optional;
 
 public class OrderApprovalCommand implements Command {
 
-    private OrderService orderService = OrderServiceImpl.getInstance();
     private TourService tourService = TourServiceImpl.getInstance();
-    private ClientService clientService = ClientServiceImpl.getInstance();
+    private OrderService orderService = OrderServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -26,6 +25,8 @@ public class OrderApprovalCommand implements Command {
                 return "/WEB-INF/jsp/500.jsp";
             } else {
                 request.setAttribute("tour", tour.get());
+                request.setAttribute("payment",
+                        orderService.calculatePaymentForTour(tour.get(), client));
                 return "/WEB-INF/jsp/order_approval.jsp";
             }
 

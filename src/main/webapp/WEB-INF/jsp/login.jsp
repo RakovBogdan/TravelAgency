@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
+<jsp:include page="../jspf/header.jspf"/>
 <h1>Login to Travel Agency</h1>
 <p>To make orders, enter your email address and password below.</p>
 <div class="form">
-<form method="post" action="travelAgency/account">
+<form method="post" action="/travelAgency/">
     <input type="hidden" name="command" value="login">
     <label class="pad_top">Email:</label>
     <input type="email" name="email" required><br>

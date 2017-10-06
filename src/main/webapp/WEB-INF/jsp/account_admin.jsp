@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
+<jsp:include page="../jspf/header.jspf"/>
 <h1>Admin:</h1>
 <p>Name: ${client.name}<br>
     email: ${client.clientCredentials.email}<br>
@@ -24,7 +25,7 @@
         <tr>
             <td><c:out value="${tour.title}"/></td>
             <td><c:out value="${tour.price}"/></td>
-            <td><a href="travelAgency/editTour?command=tourDetails&tourId=${tour.id}">Edit</a></td>
+            <td><a href="${pageContext.request.contextPath}?command=tourDetails&tourId=${tour.id}">Edit</a></td>
         </tr>
     </c:forEach>
 </table>

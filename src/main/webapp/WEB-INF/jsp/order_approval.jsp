@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
+<jsp:include page="../jspf/header.jspf"/>
 <div style="overflow-x: auto">
 <table>
     <tr>
@@ -30,9 +31,16 @@
     </tr>
 </table>
 </div>
-<div class="form">
-<form action="/travelAgency/Order?command=makeOrder&tourId=${tour.id}">
-    <input type="button" value="Order">
+<div class="orderForm">
+<form action="${pageContext.request.contextPath}">
+    <input type="hidden" name="command" value="makeOrder">
+    <input type="hidden" name="tourId" value="${tour.id}">
+
+    <label for="toursAmount">Tours Amount</label>
+    <input type="text" id="toursAmount" name="toursAmount" value="1">
+
+    <label for="payment">Payment for 1 tour: ${payment}</label>
+    <input id="payment" type="submit" value="Order">
 </form>
 </div>
 </body>

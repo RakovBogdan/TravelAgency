@@ -12,6 +12,8 @@ public interface OrderService {
 
     List<Order> getClientOrders(Client client);
 
+    int calculatePaymentForTour(Tour tour, Client client);
+
     public int payForOrder(Order order, Client client, Tour tour);
 
     public boolean cancelOrder(Order order);

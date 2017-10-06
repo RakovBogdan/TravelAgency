@@ -9,12 +9,7 @@
     <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
-<ul class="navbar">
-    <li><a class="active" href="/travelAgency/">Home</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li style="float: right;"><a href="/travelAgency/login?command=login">Login</a></li>
-</ul>
+<jsp:include page="../jspf/header.jspf"/>
 <h1> Here are all tours:</h1>
 <table id="tours">
     <tr>
@@ -26,7 +21,7 @@
         <tr>
             <td><c:out value="${tour.title}"/></td>
             <td><c:out value="${tour.price}"/></td>
-            <td><a href="travelAgency/editTour?command=orderApproval&tourId=${tour.id}">Order</a></td>
+            <td><a href="/travelAgency/?command=orderApproval&tourId=${tour.id}">Order</a></td>
         </tr>
     </c:forEach>
 </table>

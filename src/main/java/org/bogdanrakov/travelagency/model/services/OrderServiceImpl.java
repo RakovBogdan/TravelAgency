@@ -57,16 +57,26 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(OrderStatus.PAYED);
 
         if (orderDAO.update(order)) {
-            int tourPrice = tour.getPrice();
-            double tourDiscount = (tourPrice * tour.getDiscount() / (100. * 100.));
-            double clientDiscount = (tourPrice * client.getDiscount() / (100. * 100.));
-
-            double amountToPay = (tourPrice - tourDiscount - clientDiscount ) *
-                    order.getToursAmount();
-            result = (int)Math.round(amountToPay);
+            result = calculatePaymentForTour(tour, client) * order.getToursAmount();
         }
 
         return result;
+    }
+
+    @Override
+    public int calculatePaymentForTour(Tour tour, Client client) {
+        final double TO_PERCENTS_WITH_DOT = 100.;
+        final double TO_ACTUAL_NUMBER = 100.;
+        int tourPrice = tour.getPrice();
+
+        double tourDiscount = (tourPrice * tour.getDiscount() / (TO_PERCENTS_WITH_DOT *
+                TO_ACTUAL_NUMBER));
+        double clientDiscount = (tourPrice * client.getDiscount() / (TO_PERCENTS_WITH_DOT *
+                TO_ACTUAL_NUMBER));
+
+        double amountToPay = (tourPrice - tourDiscount - clientDiscount );
+
+        return (int)Math.round(amountToPay);
     }
 
     @Override
