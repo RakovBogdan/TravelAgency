@@ -1,23 +1,35 @@
 package org.bogdanrakov.travelagency.model.dao.impl;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.bogdanrakov.travelagency.model.dao.*;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
 
-    Connection getConnection() {
+    private ComboPooledDataSource cpds = new ComboPooledDataSource();
+
+    public JDBCDaoFactory() {
         Config config = Config.getInstance();
+        try {
+            cpds.setDriverClass(config.getDriverClassName());
+        } catch (PropertyVetoException e) {
+            throw new RuntimeException(e);
+        }
+        cpds.setJdbcUrl(config.getUrl());
+        cpds.setUser(config.getUser());
+        cpds.setPassword(config.getPassword());
+        cpds.setMaxStatements(config.getMaxStatements());
+    }
+
+    Connection getConnection() {
         Connection connection;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(
-                    config.getUrl(), config.getUser(),
-                    config.getPassword()
-            );
-        } catch (SQLException | ClassNotFoundException e) {
+            connection = cpds.getConnection();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 

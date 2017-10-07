@@ -10,6 +10,8 @@ public class Config {
     private String user;
     private String password;
     private String factoryClassName;
+    private String driverClassName;
+    private int maxStatements;
 
     public Config() {
         load();
@@ -31,6 +33,8 @@ public class Config {
             password = properties.getProperty("db.password");
             url = properties.getProperty("db.url");
             factoryClassName = properties.getProperty("db.factory.class");
+            driverClassName = properties.getProperty("db.driver.class");
+            maxStatements = Integer.parseInt(properties.getProperty("db.maxStatements"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,5 +54,13 @@ public class Config {
 
     public String getFactoryClassName() {
         return factoryClassName;
+    }
+
+    public String getDriverClassName() {
+        return driverClassName;
+    }
+
+    public int getMaxStatements() {
+        return maxStatements;
     }
 }

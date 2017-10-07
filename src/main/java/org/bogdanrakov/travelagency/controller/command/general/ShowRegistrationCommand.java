@@ -1,4 +1,6 @@
-package org.bogdanrakov.travelagency.controller.command;
+package org.bogdanrakov.travelagency.controller.command.general;
+
+import org.bogdanrakov.travelagency.controller.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 

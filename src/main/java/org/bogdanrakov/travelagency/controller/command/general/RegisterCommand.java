@@ -1,5 +1,6 @@
-package org.bogdanrakov.travelagency.controller.command;
+package org.bogdanrakov.travelagency.controller.command.general;
 
+import org.bogdanrakov.travelagency.controller.command.Command;
 import org.bogdanrakov.travelagency.model.entity.Client;
 import org.bogdanrakov.travelagency.model.entity.ClientCredentials;
 import org.bogdanrakov.travelagency.model.services.ClientService;
