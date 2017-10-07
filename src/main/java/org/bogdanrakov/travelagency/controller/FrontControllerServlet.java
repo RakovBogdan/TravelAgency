@@ -40,6 +40,7 @@ public class FrontControllerServlet extends HttpServlet {
         allCommands.put("showByTourType", new ShowByTourTypeCommand());
         allCommands.put("showAddTour", new ShowAddTourCommand());
         allCommands.put("addTour", new AddTourCommand());
+        allCommands.put("logout", new LogOutCommand());
     }
 
     @Override

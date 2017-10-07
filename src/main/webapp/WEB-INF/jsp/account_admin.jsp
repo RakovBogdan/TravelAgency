@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
-<jsp:include page="../jspf/header.jspf"/>
+<jsp:include page="../jspf/header.jsp"/>
 <h2>Admin:</h2>
 <p>Name: ${client.name}<br>
     email: ${client.clientCredentials.email}<br>

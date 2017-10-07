@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
-<jsp:include page="../jspf/header.jspf"/>
+<jsp:include page="../jspf/header.jsp"/>
 <h1>Login to Travel Agency</h1>
 <p>To make orders, enter your email address and password below.
     <br> <b>${message}</b></p>

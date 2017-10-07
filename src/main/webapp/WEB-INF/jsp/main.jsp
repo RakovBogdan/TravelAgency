@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
-<jsp:include page="../jspf/header.jspf"/>
+<jsp:include page="../jspf/header.jsp"/>
 <h2> Here are all tours:</h2>
 <div class="tourTypeForm">
     <form action="/travelAgency/">

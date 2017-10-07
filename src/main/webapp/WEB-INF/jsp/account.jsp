@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
-<jsp:include page="../jspf/header.jspf"/>
+<jsp:include page="../jspf/header.jsp"/>
 <h1>Your Account:</h1>
 <p>${client.name}, ${client.clientCredentials.email}, Discount: ${client.discount}</p>
 <table id="orders">
@@ -26,7 +26,10 @@
             <td><c:out value="${order.date}"/></td>
             <td><c:out value="${order.status}"/></td>
             <td><c:out value="${order.payment}"/></td>
-            <td><a href="${pageContext.request.contextPath}?command=payOrder&orderId=${order.id}">Pay</a></td>
+            <td>
+            <c:if test="${order.status != 'PAYED'}">
+                <a href="${pageContext.request.contextPath}?command=payOrder&orderId=${order.id}">Pay</a></td>
+            </c:if>
         </tr>
     </c:forEach>
 </table>

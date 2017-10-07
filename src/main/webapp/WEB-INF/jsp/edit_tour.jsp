@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../styles/main.css" type="text/css"/>
 </head>
 <body>
-<jsp:include page="../jspf/header.jspf"/>
+<jsp:include page="../jspf/header.jsp"/>
 <div class="form">
 <form action="${pageContext.request.contextPath}">
     <input type="hidden" name="command" value="confirmEdit">
