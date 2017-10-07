@@ -14,7 +14,7 @@ public interface OrderService {
 
     int calculatePaymentForTour(Tour tour, Client client);
 
-    public boolean payForOrder(long orderId);
+    public boolean payForOrder(long orderId, Client client);
 
     public boolean cancelOrder(Order order);
 }

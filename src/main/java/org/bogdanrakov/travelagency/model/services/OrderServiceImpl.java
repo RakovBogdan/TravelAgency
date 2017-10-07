@@ -1,5 +1,6 @@
 package org.bogdanrakov.travelagency.model.services;
 
+import org.bogdanrakov.travelagency.model.dao.ClientDAO;
 import org.bogdanrakov.travelagency.model.dao.DaoFactory;
 import org.bogdanrakov.travelagency.model.dao.OrderDAO;
 import org.bogdanrakov.travelagency.model.dao.TourDAO;
@@ -49,10 +50,28 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean payForOrder(long orderId) {
+    public boolean payForOrder(long orderId, Client client) {
         OrderDAO orderDAO = daoFactory.createOrderDAO();
+        boolean paymentSuccessful = false;
 
-        return orderDAO.payOrder(orderId);
+        if (orderDAO.payOrder(orderId)) {
+            paymentSuccessful = true;
+            updateClientDiscount(client);
+        }
+
+        return paymentSuccessful;
+    }
+
+    private void updateClientDiscount(Client client) {
+        int discount = client.getDiscount();
+        final int MAXIMUM_DISCOUNT = 500;
+        final int DISCOUNT_STEP_FOR_PAYMENT = 100;
+
+        if (discount < MAXIMUM_DISCOUNT) {
+            client.setDiscount(discount + DISCOUNT_STEP_FOR_PAYMENT);
+            ClientDAO clientDAO = daoFactory.createClientDAO();
+            clientDAO.update(client);
+        }
     }
 
     @Override

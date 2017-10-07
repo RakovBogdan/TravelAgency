@@ -18,7 +18,7 @@ public class PayOrderCommand implements Command {
         Client client = (Client) request
                 .getSession().getAttribute("client");
 
-        if (orderService.payForOrder(orderId)) {
+        if (orderService.payForOrder(orderId, client)) {
             request.setAttribute("orders", orderService.getClientOrders(client));
             return "/WEB-INF/jsp/account.jsp";
         }

@@ -10,4 +10,6 @@ public interface OrderDAO extends GenericDAO<Order> {
     List<Order> getClientOrders(Client client);
 
     boolean payOrder(long orderId);
+
+    int getClientPayedOrdersCount(long clientId);
 }

@@ -1,6 +1,5 @@
 package org.bogdanrakov.travelagency.model.dao.impl;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.bogdanrakov.travelagency.model.dao.DaoFactory;
 import org.bogdanrakov.travelagency.model.dao.OrderDAO;
 import org.bogdanrakov.travelagency.model.dao.TourDAO;
@@ -8,10 +7,8 @@ import org.bogdanrakov.travelagency.model.entity.Client;
 import org.bogdanrakov.travelagency.model.entity.Order;
 import org.bogdanrakov.travelagency.model.entity.OrderStatus;
 import org.bogdanrakov.travelagency.model.entity.Tour;
-import org.bogdanrakov.travelagency.model.services.TourService;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +20,10 @@ public class JDBCOrderDAO implements OrderDAO {
 
     public static final String CLIENT_ORDERS = "SELECT * FROM `order` " +
             "WHERE `client_id`=?";
+
+    public static final String CLIENT_PAYED_ORDERS = "SELECT count(`order_id`) " +
+            "FROM `order` WHERE `client_id`= ? " +
+            "AND `order`.`status`='PAYED'";
 
     public static final String UPDATE = "UPDATE `order` SET `client_id`=?, " +
             "`tour_id`=?, `date`=?, `toursAmount`=?, `status`=?, `payment`=? " +
@@ -40,6 +41,24 @@ public class JDBCOrderDAO implements OrderDAO {
 
     public JDBCOrderDAO(Connection connection) {
         this.connection = connection;
+    }
+
+    @Override
+    public int getClientPayedOrdersCount(long clientId) {
+        int result = -1;
+
+        try (PreparedStatement query = connection.prepareStatement(CLIENT_PAYED_ORDERS)) {
+            query.setLong(1, clientId);
+            ResultSet rs = query.executeQuery();
+
+            if (rs.next()) {
+                result = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
     }
 
     @Override
