@@ -32,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
                 .date(LocalDateTime.now())
                 .toursAmount(toursAmount)
                 .status(OrderStatus.ORDERED)
+                .payment(calculatePaymentForTour(tour , client) * toursAmount)
                 .build();
 
         OrderDAO orderDAO = daoFactory.createOrderDAO();

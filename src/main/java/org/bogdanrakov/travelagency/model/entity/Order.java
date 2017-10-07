@@ -10,6 +10,7 @@ public class Order {
     private LocalDateTime date;
     private int toursAmount;
     private OrderStatus status;
+    private int payment;
 
     public static class Builder {
         private long id;
@@ -18,6 +19,7 @@ public class Order {
         private LocalDateTime date;
         private int toursAmount;
         private OrderStatus status;
+        private int payment = 0;
 
         public Builder id(long id) {
             this.id = id;
@@ -49,6 +51,11 @@ public class Order {
             return this;
         }
 
+        public Builder payment(int payment) {
+            this.payment = payment;
+            return this;
+        }
+
         public Order build() {
             return new Order(this);
         }
@@ -62,6 +69,7 @@ public class Order {
         date = builder.date;
         toursAmount = builder.toursAmount;
         status = builder.status;
+        payment = builder.payment;
     }
 
     public long getId() {
@@ -112,6 +120,14 @@ public class Order {
         this.status = status;
     }
 
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -121,6 +137,7 @@ public class Order {
                 ", date=" + date +
                 ", toursAmount=" + toursAmount +
                 ", status=" + status +
+                ", payment=" + payment +
                 '}';
     }
 }

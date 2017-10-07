@@ -19,13 +19,13 @@ import java.util.Optional;
 public class JDBCOrderDAO implements OrderDAO {
 
     public static final String INSERT = "INSERT INTO `order` (`client_id`, `tour_id`, " +
-            "`date`, `toursAmount`, `status`) VALUES (?, ?, ?, ?, ?)";
+            "`date`, `toursAmount`, `status`, `payment`) VALUES (?, ?, ?, ?, ?, ?)";
 
     public static final String CLIENT_ORDERS = "SELECT * FROM `order` " +
             "WHERE `client_id`=?";
 
     public static final String UPDATE = "UPDATE `order` SET `client_id`=?, " +
-            "`tour_id`=?, `date`=?, `toursAmount`=?, `status`=? " +
+            "`tour_id`=?, `date`=?, `toursAmount`=?, `status`=?, `payment`=? " +
             "WHERE `order_id`=?";
 
     public static final String FIND_ALL = "SELECT * FROM `order`";
@@ -77,6 +77,7 @@ public class JDBCOrderDAO implements OrderDAO {
             query.setTimestamp(3, Timestamp.valueOf(order.getDate()));
             query.setInt(4, order.getToursAmount());
             query.setString(5, order.getStatus().toString());
+            query.setInt(6, order.getPayment());
             query.executeUpdate();
 
             ResultSet rsId = query.getGeneratedKeys();
@@ -135,6 +136,8 @@ public class JDBCOrderDAO implements OrderDAO {
             query.setTimestamp(3, Timestamp.valueOf(order.getDate()));
             query.setInt(4, order.getToursAmount());
             query.setString(5, order.getStatus().toString());
+            query.setInt(6, order.getPayment());
+
 
             int queryResult = query.executeUpdate();
             if (queryResult != 0) {
@@ -175,6 +178,7 @@ public class JDBCOrderDAO implements OrderDAO {
                 .date(rs.getTimestamp("date").toLocalDateTime())
                 .toursAmount(rs.getInt("toursAmount"))
                 .status(OrderStatus.valueOf(rs.getString("status")))
+                .payment(rs.getInt("payment"))
                 .build();
 
         return order;
