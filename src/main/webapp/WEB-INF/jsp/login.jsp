@@ -9,7 +9,8 @@
 <body>
 <jsp:include page="../jspf/header.jspf"/>
 <h1>Login to Travel Agency</h1>
-<p>To make orders, enter your email address and password below.</p>
+<p>To make orders, enter your email address and password below.
+    <br> <b>${message}</b></p>
 <div class="form">
 <form method="post" action="/travelAgency/">
     <input type="hidden" name="command" value="login">
@@ -21,6 +22,6 @@
     <input type="submit" value="Login" class="margin_left">
 </form>
 </div>
-<p> Don't have account? <a href="/travelAgency/Register&command=register">Register</a></p>
+<p> Don't have account? <a href="/travelAgency/register?command=showRegister">Register</a></p>
 </body>
 </html>

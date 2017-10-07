@@ -14,8 +14,8 @@ public class ClientCredentials {
         private Client client;
         private String email;
         private String password;
-        private Role role;
-        private boolean enabled;
+        private Role role = Role.CLIENT;
+        private boolean enabled = true;
 
         public Builder id(long id) {
             this.id = id;

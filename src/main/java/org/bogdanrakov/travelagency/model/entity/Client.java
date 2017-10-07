@@ -11,7 +11,7 @@ public class Client {
         private long id;
         private ClientCredentials clientCredentials;
         private String name;
-        private int discount;
+        private int discount = 0;
 
         public Builder id(long id) {
             this.id = id;

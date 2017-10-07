@@ -9,8 +9,7 @@
 <body>
 <jsp:include page="../jspf/header.jspf"/>
 <h1>Your Account:</h1>
-<p>${client.name}, ${client.clientCredentials.email}, ${client.clientCredentials.role},
-    ${client.clientCredentials.enabled}, ${client.discount}</p>
+<p>${client.name}, ${client.clientCredentials.email}, Discount: ${client.discount}</p>
 <table id="orders">
     <tr>
         <th>Tour</th>
