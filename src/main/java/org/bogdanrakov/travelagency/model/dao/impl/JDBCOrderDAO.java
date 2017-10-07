@@ -28,6 +28,8 @@ public class JDBCOrderDAO implements OrderDAO {
             "`tour_id`=?, `date`=?, `toursAmount`=?, `status`=?, `payment`=? " +
             "WHERE `order_id`=?";
 
+    public static final String PAY_ORDER = "UPDATE `order` SET `status`=? WHERE `order_id`=?";
+
     public static final String FIND_ALL = "SELECT * FROM `order`";
 
     public static final String FIND_BY_ID = "SELECT * FROM `order` WHERE `order_id`=?";
@@ -38,6 +40,23 @@ public class JDBCOrderDAO implements OrderDAO {
 
     public JDBCOrderDAO(Connection connection) {
         this.connection = connection;
+    }
+
+    @Override
+    public boolean payOrder(long orderId) {
+        boolean result = false;
+
+        try (PreparedStatement query = connection.prepareStatement(PAY_ORDER)) {
+            query.setString(1, OrderStatus.PAYED.toString());
+            query.setLong(2, orderId);
+            int queryResult = query.executeUpdate();
+            if (queryResult != 0) {
+                result = true;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
     @Override

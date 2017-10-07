@@ -49,19 +49,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int payForOrder(Order order, Client client, Tour tour) {
-        int result = -1;
-
-        order.setClient(client);
-        order.setTour(tour);
+    public boolean payForOrder(long orderId) {
         OrderDAO orderDAO = daoFactory.createOrderDAO();
-        order.setStatus(OrderStatus.PAYED);
 
-        if (orderDAO.update(order)) {
-            result = calculatePaymentForTour(tour, client) * order.getToursAmount();
-        }
-
-        return result;
+        return orderDAO.payOrder(orderId);
     }
 
     @Override

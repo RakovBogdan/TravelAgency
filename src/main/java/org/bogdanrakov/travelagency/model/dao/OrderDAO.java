@@ -8,4 +8,6 @@ import java.util.List;
 public interface OrderDAO extends GenericDAO<Order> {
 
     List<Order> getClientOrders(Client client);
+
+    boolean payOrder(long orderId);
 }

@@ -26,7 +26,7 @@
             <td><c:out value="${order.date}"/></td>
             <td><c:out value="${order.status}"/></td>
             <td><c:out value="${order.payment}"/></td>
-            <td><a href="${pageContext.request.contextPath}?command=payOrder&tourId=${order.id}">Pay</a></td>
+            <td><a href="${pageContext.request.contextPath}?command=payOrder&orderId=${order.id}">Pay</a></td>
         </tr>
     </c:forEach>
 </table>

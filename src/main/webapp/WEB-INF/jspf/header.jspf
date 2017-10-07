@@ -1,5 +1,5 @@
 <ul class="navbar">
-    <li><a class="active" href="/travelAgency/main?command=showMain">Home</a></li>
+    <li><a class="active" href="/travelAgency/main?command=showMain">All Tours</a></li>
     <li><a href="/travelAgency/?command=showMyAccount">My Account</a></li>
     <li style="float: right;"><a href="/travelAgency/login?command=login">Login</a></li>
 </ul>

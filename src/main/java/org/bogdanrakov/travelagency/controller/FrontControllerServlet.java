@@ -6,6 +6,7 @@ import org.bogdanrakov.travelagency.controller.command.user.MakeOrderCommand;
 import org.bogdanrakov.travelagency.controller.command.admin.ShowTourDetails;
 import org.bogdanrakov.travelagency.controller.command.admin.UpdateTourCommand;
 import org.bogdanrakov.travelagency.controller.command.user.OrderApprovalCommand;
+import org.bogdanrakov.travelagency.controller.command.user.PayOrderCommand;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -33,6 +34,8 @@ public class FrontControllerServlet extends HttpServlet {
         allCommands.put("showMyAccount", new ShowMyAccountCommand());
         allCommands.put("showRegister", new ShowRegistrationCommand());
         allCommands.put("register", new RegisterCommand());
+        allCommands.put("payOrder", new PayOrderCommand());
+        allCommands.put("showByTourType", new ShowByTourTypeCommand());
     }
 
     @Override
