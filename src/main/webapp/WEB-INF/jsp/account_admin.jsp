@@ -8,13 +8,19 @@
 </head>
 <body>
 <jsp:include page="../jspf/header.jspf"/>
-<h1>Admin:</h1>
+<h2>Admin:</h2>
 <p>Name: ${client.name}<br>
     email: ${client.clientCredentials.email}<br>
     Discount: ${client.discount}
 </p>
+<div class="showAddTourForm">
+    <form action="/travelAgency/">
+        <input type="hidden" name="command" value="showAddTour">
+        <input type="submit" value="Add tour">
+    </form>
+</div>
 
-<h1>All Tours:</h1>
+<h2>All Tours:</h2>
 <table id="tours">
     <tr>
         <th>Title</th>

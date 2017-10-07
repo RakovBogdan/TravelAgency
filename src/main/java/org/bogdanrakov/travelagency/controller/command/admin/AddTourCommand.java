@@ -16,7 +16,6 @@ public class AddTourCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
         String destination = request.getParameter("destination");
         String description = request.getParameter("description");
@@ -29,7 +28,6 @@ public class AddTourCommand implements Command {
         int discount = Integer.parseInt(request.getParameter("discount"));
 
         Tour tour = new Tour.Builder()
-                .id(id)
                 .title(title)
                 .destination(destination)
                 .description(description)
@@ -42,10 +40,11 @@ public class AddTourCommand implements Command {
                 .discount(discount)
                 .build();
 
-        if (tourService.changeTour(tour)) {
+        if (tourService.addTour(tour) != -1) {
+            request.setAttribute("tours", tourService.getHotToursFirst());
             return "/WEB-INF/jsp/account_admin.jsp";
         } else {
-            return "nope";
+            return "/WEB-INF/jsp/500.jsp";
         }
     }
 }

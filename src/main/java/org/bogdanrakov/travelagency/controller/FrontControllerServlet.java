@@ -1,6 +1,8 @@
 package org.bogdanrakov.travelagency.controller;
 
 import org.bogdanrakov.travelagency.controller.command.*;
+import org.bogdanrakov.travelagency.controller.command.admin.AddTourCommand;
+import org.bogdanrakov.travelagency.controller.command.admin.ShowAddTourCommand;
 import org.bogdanrakov.travelagency.controller.command.general.*;
 import org.bogdanrakov.travelagency.controller.command.user.MakeOrderCommand;
 import org.bogdanrakov.travelagency.controller.command.admin.ShowTourDetails;
@@ -36,6 +38,8 @@ public class FrontControllerServlet extends HttpServlet {
         allCommands.put("register", new RegisterCommand());
         allCommands.put("payOrder", new PayOrderCommand());
         allCommands.put("showByTourType", new ShowByTourTypeCommand());
+        allCommands.put("showAddTour", new ShowAddTourCommand());
+        allCommands.put("addTour", new AddTourCommand());
     }
 
     @Override

@@ -152,6 +152,30 @@ input[type=submit]:hover {
     cursor: pointer;
 }
 
+.showAddTourForm {
+    margin-top: 0;
+    margin-right: 0.1em;
+    margin-bottom: 0.1em;
+    float: right;
+    display: inline-block;
+    width: 20%;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 3px;
+}
+
+.showAddTourForm input[type=submit] {
+    width: 90%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 input[type=button] {
     background-color: #4CAF50;
     border: none;
