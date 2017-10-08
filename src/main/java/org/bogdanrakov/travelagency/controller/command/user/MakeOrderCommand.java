@@ -10,9 +10,10 @@ import java.util.Optional;
 
 public class MakeOrderCommand implements Command {
 
+    private static final String TOURS_AMOUNT_REGEX = "[0-9]{1,2}";
+
     private OrderService orderService = OrderServiceImpl.getInstance();
     private TourService tourService = TourServiceImpl.getInstance();
-    private ClientService clientService = ClientServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -20,13 +21,17 @@ public class MakeOrderCommand implements Command {
                 .getSession().getAttribute("client");
         Optional<Tour> tour = tourService.getTourById(
                 Long.parseLong(request.getParameter("tourId")));
-        if (!tour.isPresent()) {
-            return "/WEB-INF/jsp/500.jsp";
-        } else {
+        if (tour.isPresent() && checkToursAmount(request)) {
             int toursAmount = Integer.parseInt(request.getParameter("toursAmount"));
             orderService.makeOrder(client, tour.get(), toursAmount);
             request.setAttribute("orders", orderService.getClientOrders(client));
             return "/WEB-INF/jsp/account.jsp";
         }
+        return "/WEB-INF/jsp/500.jsp";
+    }
+
+    private boolean checkToursAmount(HttpServletRequest request) {
+        String toursAmount = request.getParameter("toursAmount");
+        return toursAmount.matches(TOURS_AMOUNT_REGEX);
     }
 }
