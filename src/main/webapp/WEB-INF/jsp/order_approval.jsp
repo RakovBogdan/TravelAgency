@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 <html>
 <head>
     <title>Tour Order</title>
@@ -21,13 +22,13 @@
     </tr>
     <tr>
         <td><c:out value="${tour.title}"/></td>
-        <td><c:out value="${tour.price}"/></td>
+        <td><ctg:pricetag price="${tour.price}"/></td>
         <td><c:out value="${tour.destination}"/></td>
         <td><c:out value="${tour.description}"/></td>
         <td><c:out value="${tour.duration}"/></td>
         <td><c:out value="${tour.start}"/></td>
         <td><c:out value="${tour.type}"/></td>
-        <td><c:out value="${tour.discount}"/></td>
+        <td><ctg:discounttag discount="${tour.discount}"/></td>
     </tr>
 </table>
 </div>
@@ -39,7 +40,7 @@
     <label for="toursAmount">Tours Amount</label>
     <input type="text" id="toursAmount" name="toursAmount" value="1">
 
-    <label for="payment">Payment for 1 tour: ${payment}</label>
+    <label for="payment">Payment for 1 tour: <ctg:pricetag price="${payment}"/></label>
     <input id="payment" type="submit" value="Order">
 </form>
 </div>

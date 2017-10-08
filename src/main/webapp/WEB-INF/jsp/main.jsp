@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,8 +46,8 @@
         <tr>
             <td><c:out value="${tour.title}"/></td>
             <td><c:out value="${tour.type}"/></td>
-            <td><c:out value="${tour.price}"/></td>
-            <td><c:out value="${tour.discount}"/></td>
+            <td><ctg:pricetag price="${tour.price}"/></td>
+            <td><ctg:discounttag discount="${tour.discount}"/></td>
             <td><c:out value="${tour.hot}"/></td>
             <td><a href="/travelAgency/?command=orderApproval&tourId=${tour.id}">Order</a></td>
         </tr>

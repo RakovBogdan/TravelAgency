@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -24,13 +25,19 @@
 <table id="tours">
     <tr>
         <th>Title</th>
+        <th>Type</th>
         <th>Price</th>
+        <th>Discount</th>
+        <th>Hot</th>
         <th></th>
     </tr>
     <c:forEach items="${tours}" var="tour">
         <tr>
             <td><c:out value="${tour.title}"/></td>
-            <td><c:out value="${tour.price}"/></td>
+            <td><c:out value="${tour.type}"/></td>
+            <td><ctg:pricetag price="${tour.price}"/></td>
+            <td><ctg:discounttag discount="${tour.discount}"/></td>
+            <td><c:out value="${tour.hot}"/></td>
             <td><a href="${pageContext.request.contextPath}?command=tourDetails&tourId=${tour.id}">Edit</a></td>
         </tr>
     </c:forEach>
