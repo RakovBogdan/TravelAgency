@@ -6,6 +6,6 @@
 </head>
 <body>
 <jsp:include page="../jspf/header.jsp"/>
-<h1>Server Error. Use navigation bar to proceed</h1>
+<h1>Couldn't find requested page. Use navigation bar to proceed</h1>
 </body>
 </html>

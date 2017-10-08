@@ -1,5 +1,6 @@
 package org.bogdanrakov.travelagency.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.bogdanrakov.travelagency.model.dao.ClientCredentialsDAO;
 import org.bogdanrakov.travelagency.model.entity.Client;
 import org.bogdanrakov.travelagency.model.entity.ClientCredentials;
@@ -12,28 +13,27 @@ import java.util.Optional;
 
 public class JDBCClientCredentialsDAO implements ClientCredentialsDAO {
 
-    public static final String FIND_BY_LOGIN_PASSWORD = "SELECT * FROM `client_login`" +
-            "WHERE `client_login`.`email` = ? AND `client_login`.`password` = ?";
-
-    public static final String IS_LOGIN_OCCUPIED = "SELECT * FROM `client_login`" +
+    private static final String IS_LOGIN_OCCUPIED = "SELECT * FROM `client_login`" +
             "WHERE `email`=?";
 
-    public static final String FIND_ALL = "SELECT * FROM `client_login`";
+    private static final String FIND_ALL = "SELECT * FROM `client_login`";
 
-    public static final String FIND_BY_ID = "SELECT * FROM `client_login` " +
+    private static final String FIND_BY_ID = "SELECT * FROM `client_login` " +
             "WHERE `client_id` = ?";
 
-    public static final String INSERT = "INSERT INTO `client_login` (" +
+    private static final String INSERT = "INSERT INTO `client_login` (" +
             "`client_id`, `email`, `password`, `role`, `enabled`) VALUES (?, ?, ?, ?, ?)";
 
-    public static final String UPDATE = "UPDATE `client_login` " +
+    private static final String UPDATE = "UPDATE `client_login` " +
             "SET `email`=?, `password`=?, `role`= ?, `enabled`=? WHERE `client_id`=?";
 
-    public static final String DELETE = "DELETE from `client_login` WHERE `client_id`=?";
+    private static final String DELETE = "DELETE from `client_login` WHERE `client_id`=?";
+
+    private static final Logger LOGGER = Logger.getLogger(JDBCClientCredentialsDAO.class);
 
     private Connection connection;
 
-    public JDBCClientCredentialsDAO(Connection connection) {
+    JDBCClientCredentialsDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -48,7 +48,8 @@ public class JDBCClientCredentialsDAO implements ClientCredentialsDAO {
             if (rs.next()) {
                 result = true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while checking if login is occupied: ", e);
             throw new RuntimeException(e);
         }
 
@@ -66,7 +67,8 @@ public class JDBCClientCredentialsDAO implements ClientCredentialsDAO {
                 ClientCredentials credentials = getCredentialsFromResultSet(rs);
                 result = Optional.of(credentials);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while finding client credentials: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -81,7 +83,8 @@ public class JDBCClientCredentialsDAO implements ClientCredentialsDAO {
                 ClientCredentials credentials = getCredentialsFromResultSet(rs);
                 result.add(credentials);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while finding all cient credentials: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -103,7 +106,8 @@ public class JDBCClientCredentialsDAO implements ClientCredentialsDAO {
             if (rsId.next()) {
                 result = rsId.getInt(1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while inserting credentials: ", e);
             throw new RuntimeException(e);
         }
 
@@ -124,7 +128,8 @@ public class JDBCClientCredentialsDAO implements ClientCredentialsDAO {
             if (queryResult != 0) {
                 result = true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while updating credentials: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -139,7 +144,8 @@ public class JDBCClientCredentialsDAO implements ClientCredentialsDAO {
             if (queryResult != 0) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while deleting credentials: ", e);
             throw new RuntimeException(e);
         }
         return false;
@@ -150,6 +156,7 @@ public class JDBCClientCredentialsDAO implements ClientCredentialsDAO {
         try {
             connection.close();
         } catch (SQLException e) {
+            LOGGER.error("Error while closing connection: ", e);
             throw new RuntimeException(e);
         }
     }

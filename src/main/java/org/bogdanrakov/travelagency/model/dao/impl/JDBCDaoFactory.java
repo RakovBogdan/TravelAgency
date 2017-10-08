@@ -1,6 +1,7 @@
 package org.bogdanrakov.travelagency.model.dao.impl;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.apache.log4j.Logger;
 import org.bogdanrakov.travelagency.model.dao.*;
 
 import java.beans.PropertyVetoException;
@@ -12,11 +13,14 @@ public class JDBCDaoFactory extends DaoFactory {
 
     private ComboPooledDataSource cpds = new ComboPooledDataSource();
 
+    private static final Logger LOGGER = Logger.getLogger(JDBCDaoFactory.class);
+
     public JDBCDaoFactory() {
         Config config = Config.getInstance();
         try {
             cpds.setDriverClass(config.getDriverClassName());
         } catch (PropertyVetoException e) {
+            LOGGER.error("Error while setting c3p0 driver class: ", e);
             throw new RuntimeException(e);
         }
         cpds.setJdbcUrl(config.getUrl());
@@ -30,6 +34,7 @@ public class JDBCDaoFactory extends DaoFactory {
         try {
             connection = cpds.getConnection();
         } catch (SQLException e) {
+            LOGGER.error("Error while obtaining connection: ", e);
             throw new RuntimeException(e);
         }
 

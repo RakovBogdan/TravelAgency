@@ -1,5 +1,6 @@
 package org.bogdanrakov.travelagency.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.bogdanrakov.travelagency.model.dao.TourDAO;
 import org.bogdanrakov.travelagency.model.entity.*;
 
@@ -10,29 +11,31 @@ import java.util.Optional;
 
 public class JDBCTourDAO implements TourDAO {
 
-    public static final String FIND_BY_TYPE = "SELECT * FROM `tour` WHERE `type`=?";
+    private static final String FIND_BY_TYPE = "SELECT * FROM `tour` WHERE `type`=?";
 
-    public static final String FIND_WITH_DESTINATION = "SELECT * FROM `tour`" +
+    private static final String FIND_WITH_DESTINATION = "SELECT * FROM `tour`" +
             " WHERE `destination` LIKE ?";
 
-    public static final String FIND_ALL = "SELECT * FROM `tour`";
+    private static final String FIND_ALL = "SELECT * FROM `tour`";
 
-    public static final String FIND_BY_ID = "SELECT * FROM `tour` WHERE `tour_id` = ?";
+    private static final String FIND_BY_ID = "SELECT * FROM `tour` WHERE `tour_id` = ?";
 
-    public static final String INSERT = "INSERT INTO `tour` (`title`, `destination`, " +
+    private static final String INSERT = "INSERT INTO `tour` (`title`, `destination`, " +
             "`description`, `duration`, `start`, `type`, `hot`, `price`, " +
             "`enabled`, `discount`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    public static final String UPDATE = "UPDATE `tour` SET `title`=?, `destination`=?," +
+    private static final String UPDATE = "UPDATE `tour` SET `title`=?, `destination`=?," +
             "`description`=?, `duration`=?, `start`=?, `type`=?, `hot`=?, `price`=?," +
             "`enabled`=?, `discount`=? " +
             "WHERE `tour_id`=?";
 
-    public static final String DELETE = "DELETE FROM `tour` WHERE `tour_id`=?";
+    private static final String DELETE = "DELETE FROM `tour` WHERE `tour_id`=?";
+
+    private static final Logger LOGGER = Logger.getLogger(JDBCTourDAO.class);
 
     private Connection connection;
 
-    public JDBCTourDAO(Connection connection) {
+    JDBCTourDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -48,7 +51,8 @@ public class JDBCTourDAO implements TourDAO {
                 Tour tour = getTourFromResultSet(rs);
                 result.add(tour);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while getting tours by type: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -66,7 +70,8 @@ public class JDBCTourDAO implements TourDAO {
                 Tour tour = getTourFromResultSet(rs);
                 result.add(tour);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while getting tours with destination: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -83,7 +88,8 @@ public class JDBCTourDAO implements TourDAO {
                 Tour tour = getTourFromResultSet(rs);
                 result.add(tour);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while getting all tours: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -100,7 +106,8 @@ public class JDBCTourDAO implements TourDAO {
                 Tour tour = getTourFromResultSet(rs);
                 result = Optional.of(tour);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while getting tour by id: ", e);
             throw new RuntimeException(e);
         }
 
@@ -128,7 +135,8 @@ public class JDBCTourDAO implements TourDAO {
             if (rsId.next()) {
                 result = rsId.getInt(1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while inserting tour: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -155,7 +163,8 @@ public class JDBCTourDAO implements TourDAO {
             if (queryResult != 0) {
                 result = true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while updating tour: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -169,7 +178,8 @@ public class JDBCTourDAO implements TourDAO {
             if (queryResult != 0) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while deleting tour: ", e);
             throw new RuntimeException(e);
         }
         return false;
@@ -180,6 +190,7 @@ public class JDBCTourDAO implements TourDAO {
         try {
             connection.close();
         } catch (SQLException e) {
+            LOGGER.error("Error while closing connection: ", e);
             throw new RuntimeException(e);
         }
     }

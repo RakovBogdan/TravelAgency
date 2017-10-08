@@ -1,5 +1,6 @@
 package org.bogdanrakov.travelagency.controller;
 
+import org.apache.log4j.Logger;
 import org.bogdanrakov.travelagency.controller.command.*;
 import org.bogdanrakov.travelagency.controller.command.admin.AddTourCommand;
 import org.bogdanrakov.travelagency.controller.command.admin.ShowAddTourCommand;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class FrontControllerServlet extends HttpServlet {
 
     private Map<String, Command> allCommands;
-//    private static final Logger LOGGER = Logger.getRootLogger();
+    private static final Logger LOGGER = Logger.getLogger(FrontControllerServlet.class);
 
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -57,6 +58,7 @@ public class FrontControllerServlet extends HttpServlet {
             throws ServletException, IOException {
         Command command = allCommands.get(req.getParameter("command"));
         String page = command.execute(req);
+        LOGGER.info("Page: " + page + " returned by command: " + command.getClass().getSimpleName());
 
         if (page != null) {
             req.getRequestDispatcher(page).forward(req, resp);

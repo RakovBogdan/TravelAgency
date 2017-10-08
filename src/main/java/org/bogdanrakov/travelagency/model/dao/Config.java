@@ -1,5 +1,7 @@
 package org.bogdanrakov.travelagency.model.dao;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -12,6 +14,8 @@ public class Config {
     private String factoryClassName;
     private String driverClassName;
     private int maxStatements;
+
+    private static final Logger LOGGER = Logger.getLogger(Config.class);
 
     public Config() {
         load();
@@ -36,7 +40,8 @@ public class Config {
             driverClassName = properties.getProperty("db.driver.class");
             maxStatements = Integer.parseInt(properties.getProperty("db.maxStatements"));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error while obtaining database configuration file: ", e);
+            throw new RuntimeException(e);
         }
     }
 

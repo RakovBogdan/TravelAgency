@@ -1,5 +1,6 @@
 package org.bogdanrakov.travelagency.model.services;
 
+import org.apache.log4j.Logger;
 import org.bogdanrakov.travelagency.model.dao.ClientDAO;
 import org.bogdanrakov.travelagency.model.dao.DaoFactory;
 import org.bogdanrakov.travelagency.model.dao.OrderDAO;
@@ -16,6 +17,8 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
+
+    private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
 
     private static class Holder {
         static final OrderService INSTANCE = new OrderServiceImpl();
@@ -38,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
         OrderDAO orderDAO = daoFactory.createOrderDAO();
         orderDAO.insert(order);
+        LOGGER.info("Client " + client.getName() + " made order");
 
         return order;
     }
@@ -57,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
         if (orderDAO.payOrder(orderId)) {
             paymentSuccessful = true;
             updateClientDiscount(client);
+            LOGGER.info("Client " + client.getName() + " payed for order " + orderId);
         }
 
         return paymentSuccessful;

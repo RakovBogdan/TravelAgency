@@ -1,5 +1,6 @@
 package org.bogdanrakov.travelagency.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.bogdanrakov.travelagency.model.dao.DaoFactory;
 import org.bogdanrakov.travelagency.model.dao.OrderDAO;
 import org.bogdanrakov.travelagency.model.dao.TourDAO;
@@ -15,31 +16,33 @@ import java.util.Optional;
 
 public class JDBCOrderDAO implements OrderDAO {
 
-    public static final String INSERT = "INSERT INTO `order` (`client_id`, `tour_id`, " +
+    private static final String INSERT = "INSERT INTO `order` (`client_id`, `tour_id`, " +
             "`date`, `toursAmount`, `status`, `payment`) VALUES (?, ?, ?, ?, ?, ?)";
 
-    public static final String CLIENT_ORDERS = "SELECT * FROM `order` " +
+    private static final String CLIENT_ORDERS = "SELECT * FROM `order` " +
             "WHERE `client_id`=?";
 
-    public static final String CLIENT_PAYED_ORDERS = "SELECT count(`order_id`) " +
+    private static final String CLIENT_PAYED_ORDERS = "SELECT count(`order_id`) " +
             "FROM `order` WHERE `client_id`= ? " +
             "AND `order`.`status`='PAYED'";
 
-    public static final String UPDATE = "UPDATE `order` SET `client_id`=?, " +
+    private static final String UPDATE = "UPDATE `order` SET `client_id`=?, " +
             "`tour_id`=?, `date`=?, `toursAmount`=?, `status`=?, `payment`=? " +
             "WHERE `order_id`=?";
 
-    public static final String PAY_ORDER = "UPDATE `order` SET `status`=? WHERE `order_id`=?";
+    private static final String PAY_ORDER = "UPDATE `order` SET `status`=? WHERE `order_id`=?";
 
-    public static final String FIND_ALL = "SELECT * FROM `order`";
+    private static final String FIND_ALL = "SELECT * FROM `order`";
 
-    public static final String FIND_BY_ID = "SELECT * FROM `order` WHERE `order_id`=?";
+    private static final String FIND_BY_ID = "SELECT * FROM `order` WHERE `order_id`=?";
 
-    public static final String DELETE = "DELETE FROM `order` WHERE `order_id`=?";
+    private static final String DELETE = "DELETE FROM `order` WHERE `order_id`=?";
 
     private Connection connection;
 
-    public JDBCOrderDAO(Connection connection) {
+    private static final Logger LOGGER = Logger.getLogger(JDBCOrderDAO.class);
+
+    JDBCOrderDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -54,7 +57,8 @@ public class JDBCOrderDAO implements OrderDAO {
             if (rs.next()) {
                 result = rs.getInt(1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while getting payed orders count: ", e);
             throw new RuntimeException(e);
         }
 
@@ -72,7 +76,8 @@ public class JDBCOrderDAO implements OrderDAO {
             if (queryResult != 0) {
                 result = true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while paying order: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -97,7 +102,8 @@ public class JDBCOrderDAO implements OrderDAO {
                 orders.add(order);
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while getting client orders: ", e);
             throw new RuntimeException(e);
         }
 
@@ -122,7 +128,8 @@ public class JDBCOrderDAO implements OrderDAO {
             if (rsId.next()) {
                 result = rsId.getInt(1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while inserting order: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -139,7 +146,8 @@ public class JDBCOrderDAO implements OrderDAO {
                 Order order = getOrderFromResultSet(rs);
                 result.add(order);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while getting all orders: ", e);
             throw new RuntimeException(e);
         }
 
@@ -157,7 +165,8 @@ public class JDBCOrderDAO implements OrderDAO {
                 Order order = getOrderFromResultSet(rs);
                 result = Optional.of(order);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while getting order by id: ", e);
             throw new RuntimeException(e);
         }
 
@@ -181,7 +190,8 @@ public class JDBCOrderDAO implements OrderDAO {
             if (queryResult != 0) {
                 result = true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while updating order: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -195,7 +205,8 @@ public class JDBCOrderDAO implements OrderDAO {
             if (queryResult != 0) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while deleting order: ", e);
             throw new RuntimeException(e);
         }
         return false;
@@ -206,6 +217,7 @@ public class JDBCOrderDAO implements OrderDAO {
         try {
             connection.close();
         } catch (SQLException e) {
+            LOGGER.error("Error while closing connection: ", e);
             throw new RuntimeException(e);
         }
     }

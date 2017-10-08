@@ -1,5 +1,6 @@
 package org.bogdanrakov.travelagency.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.bogdanrakov.travelagency.model.dao.ClientDAO;
 import org.bogdanrakov.travelagency.model.entity.Client;
 import org.bogdanrakov.travelagency.model.entity.ClientCredentials;
@@ -12,26 +13,28 @@ import java.util.Optional;
 
 public class JDBCClientDAO implements ClientDAO {
 
-    public static final String FIND_ALL = "SELECT * FROM `client` JOIN `client_login`" +
+    private static final String FIND_ALL = "SELECT * FROM `client` JOIN `client_login`" +
             "ON client.client_id = client_login.client_id";
 
-    public static final String FIND_BY_LOGIN_PASSWORD = "SELECT * FROM `client` JOIN `client_login`" +
+    private static final String FIND_BY_LOGIN_PASSWORD = "SELECT * FROM `client` JOIN `client_login`" +
             "ON client.client_id = client_login.client_id " +
             "WHERE `client_login`.`email` = ? AND `client_login`.`password` = ?";
 
-    public static final String FIND_BY_ID = "SELECT * FROM `client` WHERE `client_id` = ?";
+    private static final String FIND_BY_ID = "SELECT * FROM `client` WHERE `client_id` = ?";
 
-    public static final String INSERT = "INSERT INTO `client` (`name`, `discount`) " +
+    private static final String INSERT = "INSERT INTO `client` (`name`, `discount`) " +
             "VALUES (?, ?)";
 
-    public static final String UPDATE = "UPDATE `client` SET `name`=?, `discount`=? " +
+    private static final String UPDATE = "UPDATE `client` SET `name`=?, `discount`=? " +
             "WHERE `client_id`=?";
 
-    public static final String DELETE = "DELETE from `client` WHERE `client_id`=?";
+    private static final String DELETE = "DELETE from `client` WHERE `client_id`=?";
+
+    private static final Logger LOGGER = Logger.getLogger(JDBCClientDAO.class);
 
     private Connection connection;
 
-    public JDBCClientDAO(Connection connection) {
+    JDBCClientDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -58,7 +61,8 @@ public class JDBCClientDAO implements ClientDAO {
 
                 result = Optional.of(client);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while finding login and password: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -74,7 +78,8 @@ public class JDBCClientDAO implements ClientDAO {
                 Client client = getClientFromResultSet(rs);
                 result = Optional.of(client);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while finding by id: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -101,7 +106,8 @@ public class JDBCClientDAO implements ClientDAO {
                 credentials.setClient(client);
                 result.add(client);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while finding all clients: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -119,7 +125,8 @@ public class JDBCClientDAO implements ClientDAO {
             if (rsId.next()) {
                 result = rsId.getInt(1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while inserting client: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -136,7 +143,8 @@ public class JDBCClientDAO implements ClientDAO {
             if (queryResult != 0) {
                 result = true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            LOGGER.error("Error while updating client: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -152,6 +160,7 @@ public class JDBCClientDAO implements ClientDAO {
                 result = true;
             }
         } catch (Exception e) {
+            LOGGER.error("Error while deleting client: ", e);
             throw new RuntimeException(e);
         }
         return result;
@@ -162,6 +171,7 @@ public class JDBCClientDAO implements ClientDAO {
         try {
             connection.close();
         } catch (SQLException e) {
+            LOGGER.error("Error while closing connection: ", e);
             throw new RuntimeException(e);
         }
     }
