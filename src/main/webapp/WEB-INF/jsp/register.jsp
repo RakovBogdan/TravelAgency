@@ -7,7 +7,7 @@
 </head>
 <body>
 <jsp:include page="../jspf/header.jsp"/>
-
+<h4 style="text-align: center">${message}</h4>
 <div class="form">
     <form action="${pageContext.request.contextPath}">
         <input type="hidden" name="command" value="register">

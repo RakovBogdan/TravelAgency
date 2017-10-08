@@ -9,8 +9,8 @@
 <body>
 <jsp:include page="../jspf/header.jsp"/>
 <h1>Login to Travel Agency</h1>
-<p>To make orders, enter your email address and password below.
-    <br> <b>${message}</b></p>
+<p>To make orders, enter your email address and password below.</p>
+<h4 style="text-align: center">${message}</h4>
 <div class="form">
 <form method="post" action="/travelAgency/">
     <input type="hidden" name="command" value="login">
