@@ -42,6 +42,7 @@ public class FrontControllerServlet extends HttpServlet {
         allCommands.put("showAddTour", new ShowAddTourCommand());
         allCommands.put("addTour", new AddTourCommand());
         allCommands.put("logout", new LogOutCommand());
+        allCommands.put("changeLanguage", new ChangeLanguageCommand());
     }
 
     @Override
