@@ -21,7 +21,7 @@ public class DiscountTag extends TagSupport {
         try {
             pageContext.getOut().write(priceFormatted);
         } catch (IOException e) {
-            LOGGER.error("Error while returning formatted price: ", e);
+            LOGGER.error("Error while returning formatted discount: ", e);
             throw new JspException(e);
         }
 
